@@ -17,7 +17,7 @@ export default {
 
   setup() {
     const $q = useQuasar()
-    $q.dark.set(true)
+    $q.dark.set(false)
     const userStore = useUserStore()
     return {
       userStore,

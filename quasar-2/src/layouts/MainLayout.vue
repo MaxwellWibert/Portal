@@ -40,7 +40,8 @@
 			<q-toggle
 				color="blue"
 				dark
-				v-model="darkSwitch">
+				v-model="darkSwitch"
+				@click="toggleDarkSwitch">
 			</q-toggle>
 			<!-- <q-img
 				class="absolute-top"
@@ -70,7 +71,6 @@ import { useUserStore } from '@/store/UserStore.js'
 import { useStudyStore } from '@/store/StudyStore.js'
 import { useQuasar } from 'quasar'
 
-const $q = useQuasar()
 
 const linksList = [
 	{
@@ -126,6 +126,7 @@ export default defineComponent({
 	},
 
 	setup() {
+		const $q = useQuasar()
 		const leftDrawerOpen = ref(false)
 		const darkSwitch = ref(false)
 		const userStore = useUserStore()
@@ -140,7 +141,6 @@ export default defineComponent({
 			},
 			darkSwitch,
 			toggleDarkSwitch() {
-				darkSwitch.value = !darkSwitch.value
 				$q.dark.toggle()
 			}
 		}
