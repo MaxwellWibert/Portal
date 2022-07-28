@@ -16,5 +16,7 @@ module.exports = defineConfig({
       .use('raw-loader')
       .loader('raw-loader')
       .end()
+      
+    config.optimization.minimize(false)
   }
 })

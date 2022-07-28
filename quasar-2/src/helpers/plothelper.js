@@ -29,15 +29,15 @@ function LineChart(data, {
     strokeOpacity = 1, // stroke opacity of line
     lineColor = 'lemonchiffon'
   } = {}) {
-    let bgColor
+    //let bgColor
     //let lineColors
     let txtColor
     if (color === 'dark'){
-      bgColor = '#1a2133'
+      //bgColor = '#1a2133'
       //lineColors = ['lemonchiffon', '#bd0013', 'springgreen', 'cornflowerblue', '#ff951c', '#f587cb']
       txtColor = 'mintcream'
     } else {
-      bgColor = 'mintcream'
+      //bgColor = 'mintcream'
       //lineColors = ['indigo', '#ab0218', '#007d73', '#38a300','#a87b00', '#0232b5']
       txtColor = 'midnightblue'
     }
@@ -78,7 +78,7 @@ function LineChart(data, {
         .attr('width', width)
         .attr('height', height)
         .attr('viewBox', [0, 0, width, height])
-        .attr('style', `max-width: 100%; height: auto; height: intrinsic; background-color: ${bgColor}`)
+        .attr('style', 'max-width: 100%; height: auto; height: intrinsic')
   
     svg.append('g')
         .attr('transform', `translate(0,${height - marginBottom})`)
