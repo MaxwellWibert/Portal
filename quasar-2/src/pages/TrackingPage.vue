@@ -17,10 +17,80 @@
 			</q-card-section>
 		</q-card>
 	</q-page>
+	<q-page-sticky position="bottom-right"
+		:offset="[20, 20]">
+		<q-fab
+			label="Tracker Settings"
+			label-position="right"
+			icon="settings"
+			direction="up"
+			color="accent">
+			<q-card
+				padding
+				bordered
+				class="settings-card rounded-borders"
+				:class="{dark: isDark}">
+				<q-list
+					padding
+					bordered
+					class="rounded-borders" 
+					:class="{dark: isDark}">
+					<q-item tag="label" v-ripple>
+						<q-item-section side>
+							<q-icon color="primary" name="table_view"></q-icon>
+						</q-item-section>
+						<q-item-section>
+							<q-item-label>Table View</q-item-label>
+							<q-item-label caption>Toggle table visibility</q-item-label>
+						</q-item-section>
+						<q-item-section side top>
+							<q-toggle 
+								color="primary" 
+								v-model="tableToggle"></q-toggle>
+						</q-item-section>
+					</q-item>
+					
+					<q-item tag="label" v-ripple>
+						<q-item-section side>
+							<q-icon color="primary" name="calendar_month"></q-icon>
+						</q-item-section>
+						<q-item-section>
+							<q-item-label>Cumulative Charts</q-item-label>
+							<q-item-label caption>Choose whether charts show cumulative or differential data</q-item-label>
+						</q-item-section>
+						<q-item-section side top>
+							<q-toggle 
+								color="primary" 
+								v-model="cumulativeToggle"></q-toggle>
+						</q-item-section>
+					</q-item>
+					
+					<q-separator spaced
+						:class="{dark : isDark }"></q-separator>
+					<q-expansion-item
+						icon="trending_up"
+						label="Active Trackers"
+						:class="{dark: isDark}">
+							<q-card-section>
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
+								commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
+								eveniet doloribus ullam aliquid.
+							</q-card-section>
+					</q-expansion-item>
+
+					
+					
+				</q-list>
+
+			</q-card>	
+			
+			</q-fab>
+	</q-page-sticky>
+	
 </template>
 
 <script>
-import { defineComponent, watch } from 'vue'
+import { defineComponent, watch, ref } from 'vue'
 import LineChart from '@/helpers/plothelper.js'
 import * as d3 from 'd3'
 import test from '@/assets/test.csv'
@@ -32,8 +102,10 @@ export default defineComponent({
 	data() {
 		return {
 			trackers: [],
-			ys: ['cumsum_enrolled', 'active', 'cumsum_deceased', 'cumsum_withdrawn', 'cumsum_completed'],
+			ys: ['enrolled', 'deceased', 'withdrawn', 'completed'],
 			lineColors: [],
+			tableToggle: ref(false),
+			cumulativeToggle: ref(true),
 			theme: null
 		}
 	},
@@ -90,6 +162,10 @@ export default defineComponent({
 
 .light-svg {
 	background-color: 'mintcream'
+}
+
+.settings-card {
+	width: 250px;
 }
 
 </style>

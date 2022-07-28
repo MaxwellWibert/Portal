@@ -38,8 +38,7 @@
 
 			<q-item-label header> Dark Mode Toggle</q-item-label>
 			<q-toggle
-				color="blue"
-				dark
+				color="primary"
 				v-model="darkSwitch"
 				@click="toggleDarkSwitch">
 			</q-toggle>
