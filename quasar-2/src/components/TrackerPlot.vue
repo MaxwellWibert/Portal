@@ -1,5 +1,17 @@
 <template>
-	<div></div>
+	<q-card
+	bordered class="my-card"
+	:class="{ dark: isDark }">
+		<q-card-section>
+			<div class="text-h6" align="center">{{ title }}</div> 
+		</q-card-section>
+		<q-separator inset
+			:class="{ dark: isDark }"></q-separator>
+		<q-card-section> 
+			<svg :id="y"
+				:class="{ 'dark-svg': isDark, 'light-svg': !isDark }"></svg>	
+		</q-card-section>
+	</q-card>
 </template>
 
 <script>

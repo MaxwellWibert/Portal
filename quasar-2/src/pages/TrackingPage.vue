@@ -1,9 +1,9 @@
 <template>
-	<q-page 
+	<q-page
 	class="flex flex-center">
 		<q-card
-			v-for="y in ys"
-			:key="y"
+			v-for="y in trackerStore.activeTrackers"
+			:key="y"	
 			bordered class="my-card"
 			:class="{ dark: isDark }">
 			<q-card-section>
@@ -61,7 +61,7 @@
 						<q-item-section side top>
 							<q-toggle 
 								color="primary" 
-								v-model="cumulativeToggle"></q-toggle>
+								v-model="trackerStore.isCumulative"></q-toggle>
 						</q-item-section>
 					</q-item>
 					
@@ -90,36 +90,43 @@
 </template>
 
 <script>
-import { defineComponent, watch, ref } from 'vue'
+import { defineComponent, watch } from 'vue'
 import LineChart from '@/helpers/plothelper.js'
 import * as d3 from 'd3'
 import test from '@/assets/test.csv'
+import { useTrackerStore } from '@/store/TrackerStore'
 import { useQuasar } from 'quasar'
-
 
 export default defineComponent({
 	name: 'TrackingPage',
 	data() {
 		return {
+			tableData: [],
 			trackers: [],
-			ys: ['enrolled', 'deceased', 'withdrawn', 'completed'],
 			lineColors: [],
-			tableToggle: ref(false),
-			cumulativeToggle: ref(true),
+			tableToggle: false,
+			cumulativeToggle: true,
 			theme: null
+		}
+	},
+	setup() {
+		const trackerStore = useTrackerStore()
+
+		return {
+			trackerStore
 		}
 	},
 	created() {
 		const $q = useQuasar()
 		this.lineColors = $q.dark.isActive ? ['lemonchiffon', '#bd0013', 'springgreen', 'cornflowerblue', '#ff951c', '#f587cb'] : ['indigo', '#ab0218', '#007d73', '#38a300','#a87b00', '#0232b5']
 		this.theme = $q.dark.isActive ? 'dark' : 'light'
-
+		this.trackers = this.trackerStore.getTrackers
 		watch(() => $q.dark.isActive, val => {
 			console.log(val)
 			this.theme = val ? 'dark' : 'light'
 			this.lineColors = $q.dark.isActive ? ['lemonchiffon', '#bd0013', 'springgreen', 'cornflowerblue', '#ff951c', '#f587cb'] : ['indigo', '#ab0218', '#007d73', '#38a300','#a87b00', '#0232b5']
-			d3.selectAll('g').remove()
-			d3.selectAll('path').remove()
+			/* d3.selectAll('g').remove()
+			d3.selectAll('path').remove()*/			
 			this.drawGraphs()
 		})
 	},
@@ -135,9 +142,12 @@ export default defineComponent({
 	methods: {
 		drawGraphs() {
 			const self = this
-			self.trackers = d3.csvParse(test, d3.autoType)
-			self.ys.forEach((y, i) => {
-				LineChart(this.trackers, {
+			self.tableData = d3.csvParse(test, d3.autoType)
+			/* if (self.cumulativeToggle) {
+				self.trackers = d3.cumsum(self.trackers)
+			} */
+			self.trackers.forEach((y, i) => {
+				LineChart(self.tableData, {
 					selector: '#' + y,
 					x: d => d.date,
 					ys: [y],

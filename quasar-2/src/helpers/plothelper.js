@@ -33,12 +33,9 @@ function LineChart(data, {
     //let lineColors
     let txtColor
     if (color === 'dark'){
-      //bgColor = '#1a2133'
-      //lineColors = ['lemonchiffon', '#bd0013', 'springgreen', 'cornflowerblue', '#ff951c', '#f587cb']
       txtColor = 'mintcream'
     } else {
-      //bgColor = 'mintcream'
-      //lineColors = ['indigo', '#ab0218', '#007d73', '#38a300','#a87b00', '#0232b5']
+      
       txtColor = 'midnightblue'
     }
     // Compute values.
